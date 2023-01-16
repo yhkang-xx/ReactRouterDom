@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// import { BrowserRouter } from 'react-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Layout from './Layout';
+import About from './pages/About';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import Article from './pages/Article';
+import Articles from './pages/Articles';
+import NotFound from './pages/NotFound';
+import Login from './pages/Login';
+import MyPage from './pages/MyPage';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route index element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/profiles/:username" element={<Profile />} />
+        </Route>
+        <Route path="/articles" element={<Articles />} >
+        {/* <Route path="/articles/:id" element={<Article />} /> */}
+          <Route path=":id" element={<Article />} />
+        </Route>
+        <Route path='/login' element={<Login />} />
+        <Route path='/mypage' element={<MyPage />} />
+
+        {/* 위의 라우터에 매칭되는 것이 없을 경우 아래 실행 */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
